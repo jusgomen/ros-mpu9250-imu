@@ -1,12 +1,10 @@
 #include "ros/ros.h"
 #include "sensor_msgs/Imu.h"
 
-#include <LSM303DLHC_Magnetometer.h>
-#include <LSM303DLHC_Accelerometer.h>
-#include <L3GD20H_Gyroscope.h>
-#include <LSM303DLHC_Magnetometer.cpp>
-#include <LSM303DLHC_Accelerometer.cpp>
-#include <L3GD20H_Gyroscope.cpp>
+#include <AK8963AK8963_Magnetometer.h>
+#include <MPU9250_Acc_Gyro.h>
+#include <AK8963AK8963_Magnetometer.cpp>
+#include <MPU9250_Acc_Gyro.cpp>
 #include <I2CBus.cpp>
 #include <unistd.h>
 #include <math.h>

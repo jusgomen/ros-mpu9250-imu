@@ -1,29 +1,11 @@
 <?xml version="1.0"?>
 <package>
-  <name>adafruit_10dof_imu</name>
+  <name>mpu9250_9dof_imu</name>
   <version>0.0.1</version>
-  <description>The adafruit 10dof imu package for ROS</description>
+  <description>The mpu9250 9dof imu package for ROS</description>
 
-  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
-  <maintainer email="shantanu@cpan.org">Shantanu Bhadoria</maintainer>
-
-
-  <!-- One license tag required, multiple allowed, one license per tag -->
-  <!-- Commonly used license strings: -->
-  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>TODO</license>
-
-
-  <!-- Url tags are optional, but multiple are allowed, one per tag -->
-  <!-- Optional attribute type can be: website, bugtracker, or repository -->
-  <url type="website">http://wiki.ros.org/adafruit-10dof-imu</url>
-  <url type="repository">https://github.com/shantanubhadoria/ros-adafruit-10dof-imu</url>
-
-
-  <!-- Author tags are optional, multiple are allowed, one per tag -->
-  <!-- Authors do not have to be maintainers, but could be -->
-  <author email="shantanu@cpan.org">Shantanu Bhadoria</author>
-
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="jusgomen@gmail.com">Juan Gonzalez</maintainer>
 
   <!-- The *_depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
