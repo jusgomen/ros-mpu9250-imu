@@ -15,7 +15,7 @@ void MPU9250_Acc_Gyro::begin(void) {
   // be higher than 1 / 0.0059 = 170 Hz
   // DLPF_CFG = bits 2:0 = 011; this limits the sample rate to 1000 Hz for both
   // With the MPU9250, it is possible to get gyro sample rates of 32 kHz (!), 8 kHz, or 1 kHz
-   writeByte(MPU9250_ADDRESS, CONFIG, 0x03);
+  i2cObject.writeByte(CONFIG, 0x03);
 
   // Set sample rate = gyroscope output rate/(1 + SMPLRT_DIV)
   i2cObject.writeByte(SMPLRT_DIV, 0x04);  // Use a 200 Hz rate; a rate consistent with the filter update rate
@@ -45,21 +45,21 @@ void MPU9250_Acc_Gyro::begin(void) {
   // Set interrupt pin active high, push-pull, hold interrupt pin level HIGH until interrupt cleared,
   // clear on read of INT_STATUS, and enable I2C_BYPASS_EN so additional chips
   // can join the I2C bus and all can be controlled by the Arduino as master
-  writeByte(MPU9250_ADDRESS, INT_PIN_CFG, 0x22);
-  writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x01);  // Enable data ready (bit 0) interrupt
+  i2cObject.writeByte(INT_PIN_CFG, 0x22);
+  i2cObject.writeByte(INT_ENABLE, 0x01);  // Enable data ready (bit 0) interrupt
 }
 
 void MPU9250_Acc_Gyro::read(void) {
   uint8_t block_Acc[6];  // x/y/z accelerometer registers data to be stored here
   uint8_t block_Gyr[6];  // x/y/z gyroscope registers data to be stored here
 
-  if(readByte(INT_STATUS) & 0x01) { // wait for magnetometer data ready bit to be set
-  readBlock(ACCEL_XOUT_H, sizeof(block_Acc), block_Acc);  // Read the six raw data and ST2 registers sequentially into data array
+  if(i2cObject.readByte(INT_STATUS) & 0x01) { // wait for magnetometer data ready bit to be set
+  i2cObject.readBlock(ACCEL_XOUT_H, sizeof(block_Acc), block_Acc);  // Read the six raw data and ST2 registers sequentially into data array
   raw.acc_x = ((int16_t)block_Acc[1] << 8) | block_Acc[0] ;  // Turn the MSB and LSB into a signed 16-bit value
   raw.acc_y = ((int16_t)block_Acc[3] << 8) | block_Acc[2] ;  // Data stored as little Endian
   raw.acc_z = ((int16_t)block_Acc[5] << 8) | block_Acc[4] ;
 
-  readBlock(GYRO_XOUT_H, sizeof(block_Gyr), block_Gyr);  // Read the six raw data and ST2 registers sequentially into data array
+  i2cObject.readBlock(GYRO_XOUT_H, sizeof(block_Gyr), block_Gyr);  // Read the six raw data and ST2 registers sequentially into data array
   raw.gyr_x = ((int16_t)block_Gyr[1] << 8) | block_Gyr[0] ;  // Turn the MSB and LSB into a signed 16-bit value
   raw.gyr_y = ((int16_t)block_Gyr[3] << 8) | block_Gyr[2] ;  // Data stored as little Endian
   raw.gyr_z = ((int16_t)block_Gyr[5] << 8) | block_Gyr[4] ;

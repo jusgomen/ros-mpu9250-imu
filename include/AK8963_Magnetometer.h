@@ -38,7 +38,7 @@ uint8_t Mmode = 0x02;                 // 2 for 8 Hz, 6 for 100 Hz continuous
                                       // magnetometer data read
 
 typedef struct AK8963_MagData_s {
-  lsm303DLHCMagData_s() : x(0), y(0), z(0) {}
+  AK8963_MagData_s() : x(0), y(0), z(0) {}
   int16_t x;
   int16_t y;
   int16_t z;

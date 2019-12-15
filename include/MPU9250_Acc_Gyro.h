@@ -20,6 +20,7 @@
 
 #define INT_PIN_CFG      0x37
 #define INT_ENABLE       0x38
+#define INT_STATUS       0x3A
 
 #define PWR_MGMT_1       0x6B // Device defaults to the SLEEP mode
 #define PWR_MGMT_2       0x6C
@@ -45,7 +46,7 @@ uint8_t Ascale = AFS_2G;
 
 typedef struct MPU9250AccelData_s {
   MPU9250AccelData_s()
-  : gir_x(0), gir_y(0), gir_z(0), acc_x(0), acc_y(0), acc_z(0) {}
+  : gyr_x(0), gyr_y(0), gyr_z(0), acc_x(0), acc_y(0), acc_z(0) {}
   int16_t gyr_x;
   int16_t gyr_y;
   int16_t gyr_z;

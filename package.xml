@@ -7,6 +7,11 @@
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <maintainer email="jusgomen@gmail.com">Juan Gonzalez</maintainer>
 
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>BSD</license>
+
   <!-- The *_depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
   <!-- Examples: -->
