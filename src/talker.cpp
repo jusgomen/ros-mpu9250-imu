@@ -76,9 +76,9 @@ int main(int argc, char **argv)
     imu.angular_velocity.y = acc_gyro.raw.gyr_y * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
     imu.angular_velocity.z = acc_gyro.raw.gyr_z * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
 
-    imu.linear_acceleration.x = acc_gyro.raw.acc_x * ACC_SENSITIVITY_2G;
-    imu.linear_acceleration.y = acc_gyro.raw.acc_y * ACC_SENSITIVITY_2G;
-    imu.linear_acceleration.z = acc_gyro.raw.acc_z * ACC_SENSITIVITY_2G;
+    imu.linear_acceleration.x = acc_gyro.raw.acc_x * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.y = acc_gyro.raw.acc_y * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.z = acc_gyro.raw.acc_z * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
 
     chatter_pub.publish(imu);
 
