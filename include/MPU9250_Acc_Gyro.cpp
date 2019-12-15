@@ -55,14 +55,14 @@ void MPU9250_Acc_Gyro::read(void) {
 
   if(i2cObject.readByte(INT_STATUS) & 0x01) { // wait for magnetometer data ready bit to be set
   i2cObject.readBlock(ACCEL_XOUT_H, sizeof(block_Acc), block_Acc);  // Read the six raw data and ST2 registers sequentially into data array
-  raw.acc_x = ((int16_t)block_Acc[1] << 8) | block_Acc[0] ;  // Turn the MSB and LSB into a signed 16-bit value
-  raw.acc_y = ((int16_t)block_Acc[3] << 8) | block_Acc[2] ;  // Data stored as little Endian
-  raw.acc_z = ((int16_t)block_Acc[5] << 8) | block_Acc[4] ;
+  raw.acc_x = ((int16_t)block_Acc[0] << 8) | block_Acc[1] ;  // Turn the MSB and LSB into a signed 16-bit value
+  raw.acc_y = ((int16_t)block_Acc[2] << 8) | block_Acc[3] ;  // Data stored as big Endian
+  raw.acc_z = ((int16_t)block_Acc[4] << 8) | block_Acc[5] ;
 
   i2cObject.readBlock(GYRO_XOUT_H, sizeof(block_Gyr), block_Gyr);  // Read the six raw data and ST2 registers sequentially into data array
-  raw.gyr_x = ((int16_t)block_Gyr[1] << 8) | block_Gyr[0] ;  // Turn the MSB and LSB into a signed 16-bit value
-  raw.gyr_y = ((int16_t)block_Gyr[3] << 8) | block_Gyr[2] ;  // Data stored as little Endian
-  raw.gyr_z = ((int16_t)block_Gyr[5] << 8) | block_Gyr[4] ;
+  raw.gyr_x = ((int16_t)block_Gyr[0] << 8) | block_Gyr[1] ;  // Turn the MSB and LSB into a signed 16-bit value
+  raw.gyr_y = ((int16_t)block_Gyr[2] << 8) | block_Gyr[3] ;  // Data stored as big Endian
+  raw.gyr_z = ((int16_t)block_Gyr[4] << 8) | block_Gyr[5] ;
   }
 
 }
