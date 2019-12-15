@@ -12,7 +12,8 @@
 
 /* Constants */
 #define PI                                (3.14159265F)
-#define GYRO_SENSITIVITY_2000DPS          (0.070F)
+#define GYRO_SENSITIVITY_2000DPS          (0.06097560975609F)
+#define ACC_SENSITIVITY_2G                (0.00006103515625F)
 #define SENSORS_GRAVITY_EARTH             (9.80665F)              /**< Earth's gravity in m/s^2 */
 #define SENSORS_GRAVITY_STANDARD          (SENSORS_GRAVITY_EARTH)
 #define SENSORS_DPS_TO_RADS               (0.017453293F)          /**< Degrees/s to rad/s multiplier */
@@ -75,9 +76,9 @@ int main(int argc, char **argv)
     imu.angular_velocity.y = acc_gyro.raw.gyr_y * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
     imu.angular_velocity.z = acc_gyro.raw.gyr_z * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
 
-    imu.linear_acceleration.x = acc_gyro.raw.acc_x * SENSORS_GRAVITY_STANDARD;
-    imu.linear_acceleration.y = acc_gyro.raw.acc_y * SENSORS_GRAVITY_STANDARD;
-    imu.linear_acceleration.z = acc_gyro.raw.acc_z * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.x = acc_gyro.raw.acc_x * ACC_SENSITIVITY_2G;
+    imu.linear_acceleration.y = acc_gyro.raw.acc_y * ACC_SENSITIVITY_2G;
+    imu.linear_acceleration.z = acc_gyro.raw.acc_z * ACC_SENSITIVITY_2G;
 
     chatter_pub.publish(imu);
 
