@@ -1,9 +1,9 @@
 #include "ros/ros.h"
 #include "sensor_msgs/Imu.h"
 
-#include <AK8963AK8963_Magnetometer.h>
+#include <AK8963_Magnetometer.h>
 #include <MPU9250_Acc_Gyro.h>
-#include <AK8963AK8963_Magnetometer.cpp>
+#include <AK8963_Magnetometer.cpp>
 #include <MPU9250_Acc_Gyro.cpp>
 #include <I2CBus.cpp>
 #include <unistd.h>
@@ -11,8 +11,9 @@
 #include <limits.h>
 
 /* Constants */
-#define PI                                (3.14159265F);
-#define GYRO_SENSITIVITY_2000DPS          (0.070F)
+#define PI                                (3.14159265F)
+#define GYRO_SENSITIVITY_2000DPS          (0.06097560975609F)
+#define ACC_SENSITIVITY_2G                (0.00006103515625F)
 #define SENSORS_GRAVITY_EARTH             (9.80665F)              /**< Earth's gravity in m/s^2 */
 #define SENSORS_GRAVITY_STANDARD          (SENSORS_GRAVITY_EARTH)
 #define SENSORS_DPS_TO_RADS               (0.017453293F)          /**< Degrees/s to rad/s multiplier */
@@ -20,6 +21,7 @@
 
 int main(int argc, char **argv)
 {
+  float pitch, yaw, roll;
   const char* i2cDevice = "/dev/i2c-1";
   MPU9250_Acc_Gyro acc_gyro(i2cDevice);
   AK8963_Magnetometer mag(i2cDevice);
@@ -51,13 +53,13 @@ int main(int argc, char **argv)
     imu.linear_acceleration_covariance = {0.0025, 0, 0, 0, 0.0025, 0, 0, 0, 0.0025};
 
     roll = (float)atan2(acc_gyro.raw.acc_y, acc_gyro.raw.acc_z);
-    imu.orientation.x = roll
+    imu.orientation.x = roll;
 
-    if (acc_gyro.raw.acc_y * sin(roll) + acc.raw.acc_gyro.raw.acc_z * cos(roll))==0{
+    if ((acc_gyro.raw.acc_y * sin(roll) + acc_gyro.raw.acc_z * cos(roll)) == 0) {
       if (acc_gyro.raw.acc_x>0){
-        pitch = PI / 2
+        pitch = PI / 2;
       } else{
-        pitch = -PI / 2
+        pitch = -PI / 2;
       }
     }else{
       pitch = (float)atan(-acc_gyro.raw.acc_x / (acc_gyro.raw.acc_y * sin(roll) + acc_gyro.raw.acc_z * cos(roll)));
@@ -74,9 +76,9 @@ int main(int argc, char **argv)
     imu.angular_velocity.y = acc_gyro.raw.gyr_y * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
     imu.angular_velocity.z = acc_gyro.raw.gyr_z * GYRO_SENSITIVITY_2000DPS * SENSORS_DPS_TO_RADS;
 
-    imu.linear_acceleration.x = acc_gyro.raw.acc_x * SENSORS_GRAVITY_STANDARD;
-    imu.linear_acceleration.y = acc_gyro.raw.acc_y * SENSORS_GRAVITY_STANDARD;
-    imu.linear_acceleration.z = acc_gyro.raw.acc_z * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.x = acc_gyro.raw.acc_x * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.y = acc_gyro.raw.acc_y * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
+    imu.linear_acceleration.z = acc_gyro.raw.acc_z * ACC_SENSITIVITY_2G * SENSORS_GRAVITY_STANDARD;
 
     chatter_pub.publish(imu);
 
